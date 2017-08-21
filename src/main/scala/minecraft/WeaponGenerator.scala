@@ -16,3 +16,9 @@ object ToolType extends Enumeration {
 case class Weapon(toolType: ToolType, material: Material)
 
 case class Ingredient(quantity: Int, material: Material)
+
+object MinecraftToolsGenerator {
+  type WeaponAndIngredients = (Weapon, Option[Ingredient])
+  type Recipe = Ingredient => WeaponAndIngredients
+  type RecipeBuilder = Ingredient => Either[String, WeaponAndIngredients]
+}
