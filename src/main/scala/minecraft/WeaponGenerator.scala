@@ -25,4 +25,11 @@ object MinecraftToolsGenerator {
   private def coreRecipe(ingredient: Ingredient, t: ToolType, requiredQuantity: Int): (Weapon, Option[Ingredient]) = {
     ???
   }
+
+  def swordRecipe: Recipe = Ingredient => coreRecipe(Ingredient, ToolType.SWORD, 2)
+
+  def axeRecipe: Recipe = Ingredient => coreRecipe(Ingredient, ToolType.SWORD, 3)
+
+  def shovelRecipe: Recipe = Ingredient => coreRecipe(Ingredient, ToolType.SWORD, 1)
+
 }
