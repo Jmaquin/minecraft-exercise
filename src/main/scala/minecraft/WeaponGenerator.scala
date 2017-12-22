@@ -21,4 +21,8 @@ object MinecraftToolsGenerator {
   type WeaponAndIngredients = (Weapon, Option[Ingredient])
   type Recipe = Ingredient => WeaponAndIngredients
   type RecipeBuilder = Ingredient => Either[String, WeaponAndIngredients]
+
+  private def coreRecipe(ingredient: Ingredient, t: ToolType, requiredQuantity: Int): (Weapon, Option[Ingredient]) = {
+    ???
+  }
 }
