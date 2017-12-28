@@ -23,13 +23,24 @@ object MinecraftToolsGenerator {
   type RecipeBuilder = Ingredient => Either[String, WeaponAndIngredients]
 
   private def coreRecipe(ingredient: Ingredient, t: ToolType, requiredQuantity: Int): (Weapon, Option[Ingredient]) = {
-    ???
+    val remainingQuantity = ingredient.quantity - requiredQuantity
+    remainingQuantity match {
+      case x if x < 0 => (Weapon(t, ingredient.material), None)
+      case _ => (Weapon(t, ingredient.material), Some(Ingredient(remainingQuantity, ingredient.material)))
+    }
   }
 
   def swordRecipe: Recipe = Ingredient => coreRecipe(Ingredient, ToolType.SWORD, 2)
 
-  def axeRecipe: Recipe = Ingredient => coreRecipe(Ingredient, ToolType.SWORD, 3)
+  def axeRecipe: Recipe = Ingredient => coreRecipe(Ingredient, ToolType.AXE, 3)
 
-  def shovelRecipe: Recipe = Ingredient => coreRecipe(Ingredient, ToolType.SWORD, 1)
+  def shovelRecipe: Recipe = Ingredient => coreRecipe(Ingredient, ToolType.SHOVEL, 1)
 
+  def craft(recipe: Recipe, ingredient: Ingredient): Either[String, WeaponAndIngredients] = {
+    val weaponAndIngredients = recipe(ingredient)
+    weaponAndIngredients._2 match {
+      case Some(_) => Right(weaponAndIngredients)
+      case None => Left("Dude, can't build this tool")
+    }
+  }
 }
