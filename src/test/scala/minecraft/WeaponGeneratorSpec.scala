@@ -93,4 +93,46 @@ class WeaponGeneratorSpec extends FlatSpec with Matchers {
     result.isLeft shouldBe true
     result.left.get shouldEqual "Dude, can't build this tool"
   }
+
+  it should "give ingredient with quantity 2 for a sword weapon" in {
+    //Given
+    val aMaterial = Material.IRON
+    val anIronSword = Weapon(ToolType.SWORD, aMaterial)
+
+    //When
+    val result = MinecraftToolsGenerator.uncraft(anIronSword)
+
+    //Then
+    result should not be null
+    result.quantity shouldEqual 2
+    result.material shouldEqual aMaterial
+  }
+
+  it should "give ingredient with quantity 3 for an axe weapon" in {
+    //Given
+    val aMaterial = Material.DIAMOND
+    val aDiamondAxe = Weapon(ToolType.AXE, aMaterial)
+
+    //When
+    val result = MinecraftToolsGenerator.uncraft(aDiamondAxe)
+
+    //Then
+    result should not be null
+    result.quantity shouldEqual 3
+    result.material shouldEqual aMaterial
+  }
+
+  it should "give ingredient with quantity 1 for a shovel weapon" in {
+    //Given
+    val aMaterial = Material.WOOD
+    val aWoodShovel = Weapon(ToolType.SHOVEL, aMaterial)
+
+    //When
+    val result = MinecraftToolsGenerator.uncraft(aWoodShovel)
+
+    //Then
+    result should not be null
+    result.quantity shouldEqual 1
+    result.material shouldEqual aMaterial
+  }
 }

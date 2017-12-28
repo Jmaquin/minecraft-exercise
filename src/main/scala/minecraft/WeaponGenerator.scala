@@ -36,11 +36,18 @@ object MinecraftToolsGenerator {
 
   def shovelRecipe: Recipe = Ingredient => coreRecipe(Ingredient, ToolType.SHOVEL, 1)
 
-  def craft(recipe: Recipe, ingredient: Ingredient): Either[String, WeaponAndIngredients] = {
-    val weaponAndIngredients = recipe(ingredient)
-    weaponAndIngredients._2 match {
-      case Some(_) => Right(weaponAndIngredients)
+  def craft(recipe: Recipe, ingredient: Ingredient): Either[String, WeaponAndIngredients] =
+    recipe(ingredient)._2 match {
+      case Some(_) => Right(recipe(ingredient))
       case None => Left("Dude, can't build this tool")
     }
+
+  def uncraft: Weapon => Ingredient = {
+    Weapon =>
+      Weapon.toolType match {
+        case ToolType.SWORD => Ingredient(2, Weapon.material)
+        case ToolType.AXE => Ingredient(3, Weapon.material)
+        case ToolType.SHOVEL => Ingredient(1, Weapon.material)
+      }
   }
 }
