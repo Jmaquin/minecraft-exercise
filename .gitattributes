@@ -1,0 +1,2 @@
+sbt-dist/* linguist-vendored
+*.rb linguist-language=Scala
