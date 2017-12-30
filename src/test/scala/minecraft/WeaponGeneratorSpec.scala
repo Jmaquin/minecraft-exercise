@@ -71,7 +71,7 @@ class WeaponGeneratorSpec extends FlatSpec with Matchers {
     val aDiamondIngredient = Ingredient(aQuantity, aMaterial)
 
     //When
-    val result = MinecraftToolsGenerator.craft(MinecraftToolsGenerator.shovelRecipe,aDiamondIngredient)
+    val result = MinecraftToolsGenerator.craft(MinecraftToolsGenerator.shovelRecipe, aDiamondIngredient)
 
     //Then
     result.isRight shouldBe true
@@ -87,7 +87,7 @@ class WeaponGeneratorSpec extends FlatSpec with Matchers {
     val aDiamondIngredient = Ingredient(aQuantity, aMaterial)
 
     //When
-    val result = MinecraftToolsGenerator.craft(MinecraftToolsGenerator.shovelRecipe,aDiamondIngredient)
+    val result = MinecraftToolsGenerator.craft(MinecraftToolsGenerator.shovelRecipe, aDiamondIngredient)
 
     //Then
     result.isLeft shouldBe true
@@ -134,5 +134,133 @@ class WeaponGeneratorSpec extends FlatSpec with Matchers {
     result should not be null
     result.quantity shouldEqual 1
     result.material shouldEqual aMaterial
+  }
+
+  it should "build nothing when it has 0 Wood block" in {
+    // Given
+    val ingredients = Ingredient(0, Material.WOOD)
+    val expected = Set()
+
+    //when
+    val result = MinecraftToolsGenerator.buildBestPackageFrom(ingredients)
+
+    //Then
+    result should be(expected)
+  }
+
+  it should "build 1 shovel when it has 1 Wood block" in {
+    // Given
+    val ingredients = Ingredient(1, Material.WOOD)
+    val expected = Set(
+      Weapon(ToolType.SHOVEL, Material.WOOD)
+    )
+
+    //when
+    val result = MinecraftToolsGenerator.buildBestPackageFrom(ingredients)
+
+    //Then
+    result should be(expected)
+  }
+
+  it should "build 1 sword when it has 2 Wood block" in {
+    // Given
+    val ingredients = Ingredient(2, Material.WOOD)
+    val expected = Set(
+      Weapon(ToolType.SWORD, Material.WOOD)
+    )
+
+    //when
+    val result = MinecraftToolsGenerator.buildBestPackageFrom(ingredients)
+
+    //Then
+    result should be(expected)
+  }
+
+  it should "build 1 axe when it has 3 Wood block" in {
+    // Given
+    val ingredients = Ingredient(3, Material.WOOD)
+    val expected = Set(
+      Weapon(ToolType.AXE, Material.WOOD)
+    )
+
+    //when
+    val result = MinecraftToolsGenerator.buildBestPackageFrom(ingredients)
+
+    //Then
+    result should be(expected)
+  }
+
+  it should "build 1 axe and 1 shovel when it has 4 Wood block" in {
+    // Given
+    val ingredients = Ingredient(4, Material.WOOD)
+    val expected = Set(
+      Weapon(ToolType.AXE, Material.WOOD),
+      Weapon(ToolType.SHOVEL, Material.WOOD)
+    )
+
+    //when
+    val result = MinecraftToolsGenerator.buildBestPackageFrom(ingredients)
+
+    //Then
+    result should be(expected)
+  }
+
+  it should "build 1 Axe and 1 sword when it has 5 Wood block" in {
+    // Given
+    val ingredients = Ingredient(5, Material.WOOD)
+    val expected = Set(
+      Weapon(ToolType.SWORD, Material.WOOD),
+      Weapon(ToolType.AXE, Material.WOOD)
+    )
+
+    //when
+    val result = MinecraftToolsGenerator.buildBestPackageFrom(ingredients)
+
+    //Then
+    result should be(expected)
+  }
+
+  it should "build 1 Axe when it has 6 Wood block" in {
+    // Given
+    val ingredients = Ingredient(6, Material.WOOD)
+    val expected = Set(
+      Weapon(ToolType.AXE, Material.WOOD)
+    )
+
+    //when
+    val result = MinecraftToolsGenerator.buildBestPackageFrom(ingredients)
+
+    //Then
+    result should be(expected)
+  }
+
+  it should "build 1 Axe and 1 shovel when it has 7 Wood block" in {
+    // Given
+    val ingredients = Ingredient(7, Material.WOOD)
+    val expected = Set(
+      Weapon(ToolType.AXE, Material.WOOD),
+      Weapon(ToolType.SHOVEL, Material.WOOD)
+    )
+
+    //when
+    val result = MinecraftToolsGenerator.buildBestPackageFrom(ingredients)
+
+    //Then
+    result should be(expected)
+  }
+
+  it should "build 1 Axe and 1 sword when it has 8 Wood block" in {
+    // Given
+    val ingredients = Ingredient(8, Material.WOOD)
+    val expected = Set(
+      Weapon(ToolType.AXE, Material.WOOD),
+      Weapon(ToolType.SWORD, Material.WOOD)
+    )
+
+    //when
+    val result = MinecraftToolsGenerator.buildBestPackageFrom(ingredients)
+
+    //Then
+    result should be(expected)
   }
 }

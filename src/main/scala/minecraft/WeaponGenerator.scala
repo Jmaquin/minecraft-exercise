@@ -3,6 +3,8 @@ package minecraft
 import minecraft.Material.Material
 import minecraft.ToolType.ToolType
 
+import scala.collection.immutable.Set
+
 object Material extends Enumeration {
   type Material = Value
   val DIAMOND, IRON, WOOD = Value
@@ -49,5 +51,18 @@ object MinecraftToolsGenerator {
         case ToolType.AXE => Ingredient(3, Weapon.material)
         case ToolType.SHOVEL => Ingredient(1, Weapon.material)
       }
+  }
+
+  def buildBestPackageFrom(ingredients: Ingredient): Set[Weapon] = {
+    val eitherWeaponAndIngredients = ingredients.quantity match {
+      case x if (x / 3) == 1 => craft(axeRecipe, ingredients)
+      case x if (x / 2) == 1 => craft(swordRecipe, ingredients)
+      case x if x == 1 => craft(shovelRecipe, ingredients)
+      case _ => craft(axeRecipe, ingredients)
+    }
+    eitherWeaponAndIngredients match {
+      case Left(_) => Set()
+      case Right((x, Some(y))) => Set() + x ++ buildBestPackageFrom(y)
+    }
   }
 }
